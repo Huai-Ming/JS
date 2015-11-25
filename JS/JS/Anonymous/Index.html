@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Anoymous</title>
+    <script>
+        var fnMethodName = new Function('x', 'alert(x);');
+        fnMethodName(3);
+
+        (function () {
+            alert('water');
+        })();
+
+        (function (o) {
+            alert(o);
+        })('water');
+
+        (function(o) { 
+            alert(o); 
+            return arguments.callee; 
+        })('water')('down');
+
+        void function () {
+            alert('water');
+        }();
+    </script>
+</head>
+<body>
+
+</body>
+</html>
