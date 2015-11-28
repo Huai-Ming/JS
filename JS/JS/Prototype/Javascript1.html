@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<!-- saved from url=(0042)http://69.195.123.161/files/js/OOP/06.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+    <title>Javascript</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    function extend(subConstructor, superConstructor) {
+        // Object.create在某些浏览器没有支持,判断是否支持
+        if (!Object.create) {
+            subConstructor.prototype = superConstructor.prototype;
+            subConstructor.constructor = {
+                value: subConstructor,
+                enumerable: false,
+                writable: true,
+                configurable: true
+            }
+        } else {
+            //Object.create(proto [, propertiesObject ])
+            //通过指定的原型对象和属性创建一个新的对象.
+            subConstructor.prototype = Object.create(superConstructor.prototype, {
+                constructor: {
+                    value: subConstructor,
+                    enumerable: false,
+                    writable: true,
+                    configurable: true
+                }
+            });
+        }
+    }
+    function Car(color) {
+        this.color = color;
+    }
+    //prototype只能用在类型上,而不能应用于实例
+    //每一个构造函数都有一个属性叫做原型。这个属性非常有用：为一个特定类声明通用的变量或者函数。
+    //prototype的定义
+    //你不需要显式地声明一个prototype属性，因为在每一个构造函数中都有它的存在。
+    //prototype是一个对象，因此，你能够给它添加属性。
+        //可以在外部使用prototype为自定义的类型添加属性和方法
+    //javascript中的每个对象都有prototype属性，Javascript中对象的prototype属性的解释是：返回对象类型原型的引用。
+    //A.prototype = new B();//Clone
+    Car.prototype.move = function() {
+        console.log(this.color + " car is driving");
+    }
+    Car.prototype.turn = function(direction) {
+        console.log(this.color + " car turns " + direction);
+    }
+    Car.prototype.stop = function() {
+        console.log(this.color + " car has stopped");
+    }
+
+    function FireTruck() {
+        //call方法: 
+        //    语法：call([thisObj[,arg1[, arg2[,   [,.argN]]]]]) 
+        //定义：调用一个对象的一个方法，以另一个对象替换当前对象。 
+        //说明： 
+        //call 方法可以用来代替另一个对象调用一个方法。call 方法可将一个函数的对象上下文从初始的上下文改变为由 thisObj 指定的新对象。 
+        Car.call(this, "red");
+    }
+    console.log(FireTruck.prototype);
+    extend(FireTruck, Car);
+    console.log(FireTruck.prototype);
+
+    FireTruck.prototype.turnCannon = function(direction) {
+        console.log("Cannon moves to the " + direction);
+    }
+
+    var truck = new FireTruck();
+    truck.move();
+    truck.turnCannon("right");
+    </script>
+
+
+
+<script src="./Javascript1_files/livereload.js"></script></body></html>
